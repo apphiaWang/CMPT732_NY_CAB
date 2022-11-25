@@ -25,13 +25,12 @@ def box_plot(data):
 	box_data.repartition(1).write.mode('overwrite').csv(path = 'box_plot/')
 
 '''
-Get 24 hour speed median
+Get each weekays's 24 hour average speed
 '''
 def day_speed(data):
 	day_data = data.withColumn("hour", F.hour(data['pickup_datetime']))
-	med = F.expr('percentile_approx(speed, 0.5)')
-	day_data = day_data.groupBy("hour").agg(med.alias("median")).orderBy("median")
-	day_data.repartition(1).write.csv(path = '24hour_speed')
+	day_data = day_data.groupBy(["hour","weekday"]).agg(F.avg("speed").alias("average")).orderBy("average")
+	day_data.repartition(1).write.csv(path = '24hour_speed',header=True)
 
 '''
 Get top 10 and bottom 10 destination destination
@@ -41,21 +40,16 @@ def best_and_worst_destination(data):
 	data = data.groupBy("DOLocationID").agg(med.alias("median"))
 	worst10 = data.orderBy("median").limit(10)
 	best10 = data.orderBy(data["median"].desc()).limit(10)
-	worst10.show()
-	best10.show()
-
-'''
-
-''' 
-
+	worst10.repartition(1).write.csv(path = 'worst10', header = True)
+	best10.repartition(1).write.csv(path = 'best10', header = True)
 
 def main(inputs, output):
 
 	data, loc_data = read_ETL(inputs, output)
 	
 	# box_plot(data)
-	# day_speed(data)
-	best_and_worst_destination(data)
+	day_speed(data)
+	# best_and_worst_destination(data)
 
 if __name__ == '__main__':		
 	inputs = sys.argv[1]

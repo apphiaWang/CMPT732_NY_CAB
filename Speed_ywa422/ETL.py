@@ -7,12 +7,14 @@ import shapefile
 import zipfile
 import pandas as pd
 
-assert sys.version_info >= (3, 5) 
+
 spark = SparkSession.builder.appName('ETL').getOrCreate()
 spark.conf.set("spark.sql.parquet.enableVectorizedReader","false")
-assert spark.version >= '3.0' # make sure we have Spark 3.0+
 spark.sparkContext.setLogLevel('WARN')
 sc = spark.sparkContext
+
+assert sys.version_info >= (3, 5) 
+assert spark.version >= '3.0'
 
 '''
 The green and yellow cab has different pickup time dropoff time. It needs to be uniformed.
@@ -85,22 +87,23 @@ def read_ETL(inputs, output):
 	'''
 	|-- delete data with total amount less than 2.5 dollars
 	|-- delete data with trip distance 0
-	|-- generate speed colum with trip_distance/duration
+	|-- delete data with unknown zone (LocationID = 264, 265)
+	|-- generate duration column and delete duration less than 0 and longer than 6000 seconds
+	|-- generate speed column with trip_distance/duration adn delete speed less than 0 and larger than 100km/h
 	|-- generate tip_precentage column with tip_amount/total_amount
 	|-- generate weekday column
 	'''
 	data = data.filter(data['total_amount']>2.5)
 	data = data.filter(data['trip_distance']>0)
+	data = data.filter(data['PULocationID'] != 264).filter(data['DOLocationID'] != 265).\
+		filter(data['PULocationID'] != 264).filter(data['DOLocationID'] != 265)
 	data = data.withColumn("duration", data['dropoff_datetime'].cast("long")-data['pickup_datetime'].cast("long"))
+	data = data.filter(data["duration"]>0).filter(data["duration"]<6000)
 	data = data.withColumn("speed", data['trip_distance']/(data['duration']/3600))
+	data = data.filter(data['speed']<100).filter(data["speed"]>0)
 	data = data.withColumn("weekday", F.dayofweek(data['pickup_datetime']))
 	data = data.withColumn("tip_percentage", data['tip_amount']/data['total_amount']).cache()
 	
-	'''
-	|-- delete extreme outliars of speed
-	'''
-	data = data.filter(data['speed']<150)
-
 	'''
 	Get the Latitue and Longtitude of dataset and save it to the file
 	'''
@@ -111,7 +114,7 @@ def read_ETL(inputs, output):
 	shp_attr = [dict(zip(fields_name, attr)) for attr in attributes]
 
 	df_loc = pd.DataFrame(shp_attr).join(get_lat_lon(sf,shp_dic).set_index("LocationID"), on="LocationID")
-
+	df_loc = spark.createDataFrame(df_loc)
 	return data, df_loc
 
 if __name__ == '__main__':		
