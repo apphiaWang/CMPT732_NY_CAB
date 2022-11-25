@@ -8,6 +8,11 @@ import zipfile
 import pandas as pd
 
 assert sys.version_info >= (3, 5) 
+spark = SparkSession.builder.appName('ETL').getOrCreate()
+spark.conf.set("spark.sql.parquet.enableVectorizedReader","false")
+assert spark.version >= '3.0' # make sure we have Spark 3.0+
+spark.sparkContext.setLogLevel('WARN')
+sc = spark.sparkContext
 
 '''
 The green and yellow cab has different pickup time dropoff time. It needs to be uniformed.
@@ -75,8 +80,8 @@ def read_ETL(inputs, output):
 	|-- congestion_surcharge: integer (nullable = true)
 	'''
 	
-	data = merge_yellow_green(inputs)
-
+	# data = merge_yellow_green(inputs)
+	data = spark.read.parquet(inputs)
 	'''
 	|-- delete data with total amount less than 2.5 dollars
 	|-- delete data with trip distance 0
@@ -87,10 +92,14 @@ def read_ETL(inputs, output):
 	data = data.filter(data['total_amount']>2.5)
 	data = data.filter(data['trip_distance']>0)
 	data = data.withColumn("duration", data['dropoff_datetime'].cast("long")-data['pickup_datetime'].cast("long"))
-	data = data.withColumn("speed", data['trip_distance']*1000/data['duration'])
+	data = data.withColumn("speed", data['trip_distance']/(data['duration']/3600))
 	data = data.withColumn("weekday", F.dayofweek(data['pickup_datetime']))
 	data = data.withColumn("tip_percentage", data['tip_amount']/data['total_amount']).cache()
-
+	
+	'''
+	|-- delete extreme outliars of speed
+	'''
+	data = data.filter(data['speed']<150)
 
 	'''
 	Get the Latitue and Longtitude of dataset and save it to the file
