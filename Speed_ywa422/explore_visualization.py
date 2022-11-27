@@ -228,12 +228,23 @@ def weekday_24hour(path):
 			g = sns.heatmap(dt, vmin=0.0, annot=True, fmt='.2g', cmap='Blues', cbar=True)
 			plt.savefig('figure/24hour_heatmap')
 
+'''
+Plot the tip amount and speed to see if there is a connection between them
+'''
+def tip_speed(data):
+	data = data.sample(True, 0.005)
+	data = data.select("speed", "tip_percentage").filter(data["tip_percentage"]>0)
+	data = data.toPandas()
+	plot = data.plot.scatter(x='speed',y='tip_percentage',c ='DarkBlue')
+	plt.savefig('figure/tip_speed')
+
 def main(inputs, output):
 	data, _ = read_ETL(inputs,output)
 	# speed_distribution_plot(data)
 	# duration_distribution_plot(data)
 	# NYC_region_zone_map(data)
-	weekday_24hour('24hour_speed')
+	# weekday_24hour('24hour_speed')
+	tip_speed(data)
 
 
 
