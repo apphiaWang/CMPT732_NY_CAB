@@ -2,6 +2,10 @@
 Only want data which are:
 1. trip distance > 0
 2. payment type = 1 (pay by credit card)
+3. fare_amount >= 2.5
+4. duration < 100 min
+5. 
+
 
 # wanted features
 > 小费相关的
@@ -15,6 +19,7 @@ Only want data which are:
 - year of pickup date 
 - dayofweek(tpep_pickup_time)
 - Pickup hour of the day
+
 ``` python
 from pyspark.sql import functions as F
 df.withColumn("hour", F.date_trunc('hour',F.to_timestamp("timestamp","yyyy-MM-dd HH:mm:ss 'UTC'")))\
@@ -29,3 +34,4 @@ df.withColumn("hour", F.date_trunc('hour',F.to_timestamp("timestamp","yyyy-MM-dd
 > 参考了这个项目 https://towardsdatascience.com/new-york-taxi-data-set-analysis-7f3a9ad84850
 - pickup/drop down 在商区或者富人区？？
 
+- other_amount (tolls ... )
