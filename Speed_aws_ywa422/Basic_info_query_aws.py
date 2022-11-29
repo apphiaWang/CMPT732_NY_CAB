@@ -22,14 +22,14 @@ def box_plot(data):
 					F.max("speed").alias("max"),\
 					med.alias('median'),Q2.alias('Q2'), Q4.alias('Q4'))
 	box_data.show()
-	box_data.repartition(1).write.mode('overwrite').option("header", True).csv(path = 'box_plot/')
+	box_data.repartition(1).write.mode('overwrite').option("header", True).csv(path = output + '/box_plot')
 
 '''
 Get each weekays's 24 hour average speed
 '''
 def day_speed(data):
 	data = data.groupBy(["hour","weekday"]).agg(F.avg("speed").alias("average")).orderBy("average")
-	data.repartition(1).write.csv(path = '24hour_speed',header=True)
+	data.repartition(1).write.csv(path = output + '/24hour_speed',header=True)
 
 '''
 Get top 10 and bottom 10 destination destination
@@ -39,8 +39,8 @@ def best_and_worst_destination(data):
 	data = data.groupBy("DOLocationID").agg(med.alias("median"))
 	worst10 = data.orderBy("median").limit(10)
 	best10 = data.orderBy(data["median"].desc()).limit(10)
-	worst10.repartition(1).write.option("header", True).csv(path = 'worst10')
-	best10.repartition(1).write.option("header", True).csv(path = 'best10')
+	worst10.repartition(1).write.option("header", True).csv(path =output + '/worst10')
+	best10.repartition(1).write.option("header", True).csv(path =output + '/best10')
 
 def main(inputs, output):
 
@@ -64,7 +64,7 @@ def main(inputs, output):
 	box_plot(data)
 	day_speed(data)
 	best_and_worst_destination(data)
-
+	
 if __name__ == '__main__':		
 	inputs = sys.argv[1]
 	output = sys.argv[2]
