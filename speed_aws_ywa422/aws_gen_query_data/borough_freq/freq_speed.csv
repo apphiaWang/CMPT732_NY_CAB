@@ -1,0 +1,37 @@
+PUborough,DOborough,count
+Queens,EWR,15604
+Staten Island,Queens,3882
+Brooklyn,Queens,539715
+Bronx,EWR,189
+Manhattan,Queens,8357847
+Staten Island,EWR,67
+EWR,Queens,98
+EWR,Staten Island,7
+Queens,Bronx,276063
+Manhattan,Brooklyn,7306232
+Manhattan,Bronx,1249974
+Queens,Manhattan,10225074
+Bronx,Bronx,714489
+Brooklyn,Manhattan,2053876
+Brooklyn,EWR,6569
+Bronx,Queens,79162
+Queens,Staten Island,17541
+Bronx,Manhattan,347400
+Brooklyn,Staten Island,12454
+EWR,EWR,3394
+Brooklyn,Bronx,76957
+Staten Island,Brooklyn,5315
+Queens,Queens,5916191
+Manhattan,EWR,504199
+Manhattan,Staten Island,39794
+Staten Island,Manhattan,3119
+EWR,Manhattan,477
+EWR,Brooklyn,46
+Manhattan,Manhattan,220555292
+Brooklyn,Brooklyn,6125483
+Bronx,Brooklyn,69623
+Queens,Brooklyn,2522116
+Staten Island,Staten Island,4342
+Bronx,Staten Island,2076
+Staten Island,Bronx,1396
+EWR,Bronx,3
