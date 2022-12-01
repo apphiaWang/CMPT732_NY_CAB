@@ -1,1 +1,0 @@
-{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1669418625628,"sparkVersion":"3.3.0","uid":"VectorAssembler_a6a49bbbfb98","paramMap":{"outputCol":"features","inputCols":["weekday","hour","pickup_longitude","pickup_latitude","dropoff_longitude","dropoff_latitude"]},"defaultParamMap":{"outputCol":"VectorAssembler_a6a49bbbfb98__output","handleInvalid":"error"}}
