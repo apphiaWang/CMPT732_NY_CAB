@@ -14,6 +14,9 @@ def get_filename(s):
 def combine_location(df="data"):
     """
         this function takes df as the input dataframe tempview name
+            the dataframe is generated in the main function
+        produces a table of year, month, locationID, the location's of the year and month
+             average tip_ratio, count of trip, and max tip amount given
         ***
         if a ride starts or ends at a location, we say the trip occurs at the location.
     """
@@ -32,12 +35,13 @@ def main(inputs, outputs):
         'PULocationID', 'DOLocationID', 'fare_amount','tip_amount','total_amount', 'payment_type')\
         .createOrReplaceTempView("data")
     spark.sql("""
-        SELECT *, tip_amount/(total_amount-tip_amount) as tip_ratio, month(pickup_datetime) as month, year(pickup_datetime) as year
+        SELECT *, tip_amount/(total_amount - tip_amount) as tip_ratio, month(pickup_datetime) as month, year(pickup_datetime) as year
         FROM data 
         WHERE BIGINT(dropoff_datetime - pickup_datetime)/60 <= 180
             AND payment_type = 1
             AND fare_amount >= 2.5
             AND trip_distance > 0
+            AND trip_distance < 180
             AND year(pickup_datetime) < 2022 AND year(pickup_datetime) > 2016
             AND VendorID < 3
     """).createOrReplaceTempView("data")

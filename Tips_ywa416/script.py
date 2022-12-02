@@ -22,4 +22,7 @@ df = pd.read_csv(filepath)
 lookup_zone = pd.read_csv(taxi_zone)
 joined = df.join(lookup_zone, lsuffix='locationID', rsuffix='LocationID')
 joined = joined.sort_values(by='avg', ascending=False)
-joined.to_csv(output, index=False)
+joined.to_csv('%s/full.csv'%output, index=False)
+joined = joined[joined["count"]> 10000]
+joined.head(20).to_csv('%s/top20.csv'%output, index=False)
+joined.tail(20).sort_values(by='avg').to_csv('%s/tail20.csv'%output, index=False)
