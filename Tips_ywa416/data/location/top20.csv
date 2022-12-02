@@ -1,0 +1,21 @@
+locationID,avg,max,count,LocationID,Borough,Zone,service_zone
+52,0.1960591772846645,351.61,606111,260,Queens,Woodside,Boro Zone
+40,0.1958083524685307,241.65,662616,259,Bronx,Woodlawn/Wakefield,Boro Zone
+54,0.1948559430651109,363.0,127940,258,Queens,Woodhaven,Boro Zone
+112,0.1944368069556173,445.5,1030616,257,Brooklyn,Windsor Terrace,Boro Zone
+186,0.1925533582028014,433.37,14081556,253,Queens,Willets Point,Boro Zone
+138,0.191948911815137,450.0,10275986,252,Queens,Whitestone,Boro Zone
+230,0.1916588293885844,999.99,13445844,251,Staten Island,Westerleigh,Boro Zone
+264,0.18963643012835,400.0,3041456,250,Bronx,Westchester Village/Unionport,Boro Zone
+162,0.18922791692982,999.99,16138709,249,Manhattan,West Village,Yellow Zone
+163,0.1892160595514968,450.0,11834377,248,Bronx,West Farms/Bronx River,Boro Zone
+161,0.188966480031404,700.0,18134200,247,Bronx,West Concourse,Boro Zone
+223,0.1887995987011291,333.33,855525,246,Manhattan,West Chelsea/Hudson Yards,Yellow Zone
+239,0.1886709739318478,444.0,12873020,245,Staten Island,West Brighton,Boro Zone
+142,0.1883251930797387,800.0,13890701,244,Manhattan,Washington Heights South,Boro Zone
+43,0.1882061308362272,400.0,6444899,243,Manhattan,Washington Heights North,Boro Zone
+125,0.1878320686045331,445.68,2864649,242,Bronx,Van Nest/Morris Park,Boro Zone
+33,0.1878287400797303,300.08,1626423,241,Bronx,Van Cortlandt Village,Boro Zone
+100,0.1875143275142366,411.38,7722986,240,Bronx,Van Cortlandt Park,Boro Zone
+249,0.1874464788643879,1393.56,9645808,239,Manhattan,Upper West Side South,Yellow Zone
+113,0.1873936871162788,493.22,7558161,238,Manhattan,Upper West Side North,Yellow Zone
