@@ -2,9 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sys
 assert sys.version_info >= (3, 5) # make sure we have Python 3.5+
-import time
 
-from os import listdir
+from os import mkdir, listdir
 
 input = sys.argv[1]
 output = sys.argv[2]
@@ -21,9 +20,6 @@ filepath = input
 df = pd.read_csv(filepath)
 lookup_zone = pd.read_csv(taxi_zone)
 joined = df.join(lookup_zone, lsuffix='locationID', rsuffix='LocationID')
-joined = joined.sort_values(by='avg', ascending=False)
+joined = joined.sort_values(by='0_tip_ratio', ascending=False)
+mkdir(output)
 joined.to_csv('%s/full.csv'%output, index=False)
-joined = joined[joined["count"]> 10000] 
-joined.to_csv('%s/>10000.csv'%output, index=False)
-joined.head(20).to_csv('%s/top20.csv'%output, index=False)
-joined.tail(20).sort_values(by='avg').to_csv('%s/tail20.csv'%output, index=False)
