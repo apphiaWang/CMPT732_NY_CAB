@@ -19,7 +19,7 @@ def main(inputs, model_file):
                             dayofweek(pickup_datetime) as day,
                             hour(pickup_datetime) as hour, month(pickup_datetime) as month, year(pickup_datetime) as year,
                             trip_distance/(bigint(dropoff_datetime) - bigint(pickup_datetime))*60*60 as avg_speed,
-                            trip_distance, fare_amount, total_amount-fare_amount-tip_amount as other_amount
+                            trip_distance, fare_amount, (total_amount-fare_amount-tip_amount)/(total_amount-tip_amount) as other_amount
                     FROM __THIS__
                     WHERE BIGINT(dropoff_datetime - pickup_datetime)/60 <= 180
                         AND payment_type = 1
@@ -35,7 +35,7 @@ def main(inputs, model_file):
 
     feature_assembler = VectorAssembler(outputCol="features").setHandleInvalid("skip")
     feature_assembler.setInputCols([ "month", "day", "hour", "PULocationID", "DOLocationID", "trip_distance", "duration", "other_amount", "fare_amount"])
-    estimator = DecisionTreeRegressor(featuresCol="features", labelCol="tip_ratio")
+    estimator = GBTRegressor(featuresCol="features", labelCol="tip_ratio")
     pipeline = Pipeline(stages=[day_transformer, feature_assembler, estimator])
     model = pipeline.fit(train)
     # evaluate performance
@@ -43,13 +43,13 @@ def main(inputs, model_file):
     train_result = model.transform(train)
     train_rmse = evaluator.evaluate(train_result)
     train_r2 = evaluator.evaluate(train_result, {evaluator.metricName: "r2"})
-    print('Training score for GBT model:')
+    print('Training score for regressor:')
     print('r2 =', train_r2)
     print('rmse =', train_rmse)
     prediction = model.transform(validation)
     val_rmse = evaluator.evaluate(prediction)
     val_r2 = evaluator.evaluate(prediction, {evaluator.metricName: "r2"})
-    print('Validation score for GBT model:')
+    print('Validation score for regressor:')
     print('r2 =', val_r2)
     print('rmse =', val_rmse)
     print(model.stages[-1].featureImportances)
