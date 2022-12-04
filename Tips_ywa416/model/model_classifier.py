@@ -23,20 +23,22 @@ def main(inputs, model_file):
                     FROM __THIS__
                     WHERE BIGINT(dropoff_datetime - pickup_datetime)/60 <= 180
                         AND payment_type = 1
-                        AND fare_amount >= 2.5
-                        AND trip_distance > 0
                         AND year(pickup_datetime) < 2022 AND year(pickup_datetime) > 2016
                         AND VendorID < 3
-                        AND Trip_distance < 180
-                        AND tip_amount/(total_amount-tip_amount) < 0.4)
+                        AND tip_amount/(total_amount-tip_amount) <= 0.4
+                        AND fare_amount BETWEEN 2.5 + 2 * trip_distance AND 2.5 + 3.5 * trip_distance
+                        AND total_amount <= 120 AND trip_distance <= 20 
+                        AND total_amount - tip_amount - fare_amount <= 20
+                    )
                     SELECT tip_ratio, PULocationID, DOLocationID, other_amount, fare_amount, hour, day, duration, trip_distance,
                         CASE WHEN tip_range_index <= 4 THEN int(tip_range_index)
                             ELSE 10 END  as tip_range_index
                         FROM data
                     """
     )
-    test = day_transformer.transform(train)
-    test.show(1)
+    test = day_transformer.transform(data)
+    print(test.count())
+    print(test.count()/data.count())
     feature_assembler = VectorAssembler(outputCol="features").setHandleInvalid("skip")
     feature_assembler.setInputCols([  "day", "hour", "PULocationID", "DOLocationID",\
          "trip_distance", "duration", "other_amount", "fare_amount"])

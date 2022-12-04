@@ -40,7 +40,11 @@ def main(inputs, outputs):
                     ELSE 9 END  as tip_range_index
         FROM tb
     """).createOrReplaceTempView("data")
-
+    spark.sql("""
+        SELECT mean(tip_ratio) FROM data
+    """).show()
+    
+    return
     # distribution of tips over year
     spark.sql("""
         SELECT year, tip_range_index, count(*) as count FROM data group by year, tip_range_index
@@ -52,16 +56,6 @@ def main(inputs, outputs):
     """)
     distribution.write.option("header",True).csv('%s/distribution'%outputs, mode='overwrite')
 
-    # mean, median, max of month
-    monthly = spark.sql("""
-        SELECT year, month, mean(tip_ratio)*100 as mean_percent, percentile_approx(tip_ratio, 0.5)*100 as median_percent,
-                max(tip_amount) as max_tip, count(*) as count
-        FROM data 
-        GROUP BY year, month
-        order by 1, 2
-    """)
-    monthly.write.option("header",True).csv('%s/monthly'%outputs, mode='overwrite')
-
     # mean, median, max of dates
     daily = spark.sql("""
         SELECT year, date, mean(tip_ratio)*100 as mean_percent, percentile_approx(tip_ratio, 0.5)*100 as median_percent, 
@@ -72,8 +66,8 @@ def main(inputs, outputs):
     """)
     daily.write.partitionBy("year").option("header",True).csv('%s/daily'%outputs, mode='overwrite')
 
-    for feature in ["trip_distance", "other_fare_ratio", "duration"]:
-        write_boxplot_data(outputs, feature)
+    # for feature in ["trip_distance", "other_fare_ratio", "duration"]:
+    #     write_boxplot_data(outputs, feature)
 
 if __name__ == '__main__':  
     inputs = sys.argv[1]

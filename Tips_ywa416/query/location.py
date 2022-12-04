@@ -1,15 +1,6 @@
 import sys
 assert sys.version_info >= (3, 5) # make sure we have Python 3.5+
-import os
-
-from pyspark.sql import SparkSession, functions, types
-
-import numpy as np
-
-
-@functions.udf(returnType=types.StringType())
-def get_filename(s):
-    return s.split("/")[-1].split(".")[0]
+from pyspark.sql import SparkSession
 
 def combine_location(df="data"):
     """
@@ -46,13 +37,6 @@ def main(inputs, outputs):
             AND VendorID < 3
     """).createOrReplaceTempView("data")
     combine_location()
-
-    monthly_location = spark.sql("""
-        with tb as (SELECT *,
-            mean(count) OVER(PARTITION BY year, month) AS avg_count  FROM total)
-        SELECT year, month, locationID, avg, max, count, avg_count  FROM tb where count > avg_count ORDER BY year, month, avg DESC
-    """)
-    monthly_location.write.option("header",True).csv('%s/monthly_location'%outputs, mode='overwrite')
     
     total_location = spark.sql("""
         SELECT locationID, sum(avg*count)/sum(count) as avg, max(max) as max, sum(count) as count  

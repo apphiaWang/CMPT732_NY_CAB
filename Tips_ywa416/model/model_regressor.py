@@ -29,6 +29,9 @@ def main(inputs, model_file):
                         AND VendorID < 3
                         AND Trip_distance < 180
                         AND tip_amount/(total_amount-tip_amount) < 0.5
+                        AND fare_amount BETWEEN 2.5 + 2 * trip_distance AND 2.5 + 3.5 * trip_distance
+                        AND total_amount <= 120 AND trip_distance <= 20 
+                        AND total_amount - tip_amount - fare_amount <= 20
                     """
     )
     test = day_transformer.transform(train)
