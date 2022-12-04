@@ -22,29 +22,25 @@ def main(inputs, outputs):
     # filter unwated records and generate wanted features
     spark.sql("""
         WITH tb AS (SELECT *, tip_amount/(total_amount - tip_amount) as tip_ratio, 
-            ceil(20*tip_amount/(total_amount - tip_amount)) as tip_index,
-            (total_amount-tip_amount-fare_amount)/(total_amount - tip_amount) as other_fare_ratio,
-            to_date(pickup_datetime) as date,
-            bigint(dropoff_datetime) - bigint(pickup_datetime)/60 as duration,
-            month(pickup_datetime) as month, year(pickup_datetime) as year
-        FROM data 
-        WHERE BIGINT(dropoff_datetime - pickup_datetime)/60 <= 180
-            AND payment_type = 1
-            AND fare_amount >= 2.5
-            AND trip_distance > 0 AND trip_distance < 180
-            AND year(pickup_datetime) < 2022 AND year(pickup_datetime) > 2016
-            AND VendorID < 3)
+                ceil(20*tip_amount/(total_amount - tip_amount)) as tip_index,
+                (total_amount-tip_amount-fare_amount)/(total_amount - tip_amount) as other_fare_ratio,
+                to_date(pickup_datetime) as date,
+                bigint(dropoff_datetime) - bigint(pickup_datetime)/60 as duration,
+                month(pickup_datetime) as month, year(pickup_datetime) as year
+            FROM data 
+            WHERE BIGINT(dropoff_datetime - pickup_datetime)/60 <= 180
+                AND payment_type = 1
+                AND fare_amount BETWEEN 2.5 + 2 * trip_distance AND 2.5 + 3.5 * trip_distance
+                AND trip_distance > 0 AND trip_distance < 180
+                AND year(pickup_datetime) < 2022 AND year(pickup_datetime) > 2016
+                AND VendorID < 3
+            )
         SELECT tip_ratio, tip_amount, other_fare_ratio, year, month, date, duration,
             trip_distance, PULocationID, DOLocationID,
             CASE WHEN tip_index <= 8 THEN tip_index
                     ELSE 9 END  as tip_range_index
         FROM tb
     """).createOrReplaceTempView("data")
-    spark.sql("""
-        SELECT mean(tip_ratio) FROM data
-    """).show()
-    
-    return
     # distribution of tips over year
     spark.sql("""
         SELECT year, tip_range_index, count(*) as count FROM data group by year, tip_range_index

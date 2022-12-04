@@ -31,14 +31,11 @@ def main(inputs, model_file):
                         AND total_amount - tip_amount - fare_amount <= 20
                     )
                     SELECT tip_ratio, PULocationID, DOLocationID, other_amount, fare_amount, hour, day, duration, trip_distance,
-                        CASE WHEN tip_range_index <= 4 THEN int(tip_range_index)
-                            ELSE 10 END  as tip_range_index
+                        CASE WHEN tip_range_index <= 2 THEN int(tip_range_index)
+                            ELSE 3 END  as tip_range_index
                         FROM data
                     """
     )
-    test = day_transformer.transform(data)
-    print(test.count())
-    print(test.count()/data.count())
     feature_assembler = VectorAssembler(outputCol="features").setHandleInvalid("skip")
     feature_assembler.setInputCols([  "day", "hour", "PULocationID", "DOLocationID",\
          "trip_distance", "duration", "other_amount", "fare_amount"])

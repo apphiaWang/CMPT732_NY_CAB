@@ -30,12 +30,13 @@ def main(inputs, outputs):
         FROM data 
         WHERE BIGINT(dropoff_datetime - pickup_datetime)/60 <= 180
             AND payment_type = 1
-            AND fare_amount >= 2.5
+            AND fare_amount BETWEEN 2.5 + 2 * trip_distance AND 2.5 + 3.5 * trip_distance 
             AND trip_distance > 0
             AND trip_distance < 180
             AND year(pickup_datetime) < 2022 AND year(pickup_datetime) > 2016
             AND VendorID < 3
     """).createOrReplaceTempView("data")
+    spark.sql("SELECT COUNT(*) FROM data").show()
     combine_location()
     
     total_location = spark.sql("""
