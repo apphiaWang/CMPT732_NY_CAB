@@ -4,7 +4,7 @@ from pyspark.sql import functions as F
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
-
+import os
 '''
 Run Command
 spark-submit correlation_analysis.py ../data ../figure/test_gen_output
@@ -14,8 +14,8 @@ Functions below check the potential correlation between speed and features, scat
 if one feature affects speed.
 '''
 
-home_dir = '/home/yiwenw/CMPT732_NY_CAB/' #alter your directory here
-sys.path.append(home_dir + "speed/ETL") #absolute path of ETL package
+etl_path = os.path.join(os.path.dirname(__file__) , "../ETL")
+sys.path.append(etl_path) #absolute path of ETL package
 from ETL import read_ETL
 
 '''

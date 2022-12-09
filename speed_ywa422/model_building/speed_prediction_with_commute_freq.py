@@ -9,7 +9,7 @@ from pyspark.sql import functions as F
 spark = SparkSession.builder.appName('speed prediction').getOrCreate()
 spark.sparkContext.setLogLevel('WARN')
 assert spark.version >= '2.4' # make sure we have Spark 2.4+
-
+import os
 '''
 Run Command
 spark-submit speed_prediction_with_commute_freq.py ../data ../data/query_gen_data/hour_day_zone_commute_freq.csv  test_model_output
@@ -18,8 +18,8 @@ Function
 Train model with information from original dataset with additional traffic flow feature
 '''
 
-home_dir = '/home/yiwenw/CMPT732_NY_CAB/' #alter your directory here
-sys.path.append(home_dir + "speed/ETL") #absolute path of ETL package
+etl_path = os.path.join(os.path.dirname(__file__) , "../ETL")
+sys.path.append(etl_path) #absolute path of ETL package
 from ETL import read_ETL
 
 def main(inputs, input2, output):

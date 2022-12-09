@@ -3,10 +3,9 @@ from pyspark.sql import SparkSession, types
 from pyspark.sql import functions as F
 
 import sys
-
-home_dir = '/home/yiwenw/CMPT732_NY_CAB/' #alter your directory here
-sys.path.append(home_dir + "speed/ETL") #absolute path of ETL package
-
+import os
+etl_path = os.path.join(os.path.dirname(__file__) , "../ETL")
+sys.path.append(etl_path) #absolute path of ETL package
 from ETL import read_ETL
 
 '''

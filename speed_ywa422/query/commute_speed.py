@@ -5,14 +5,14 @@ import sys
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-
+import os
 '''
 Run command
 spark-submit commute_speed.py ../data ../../speed_aws_ywa422/aws_gen_query_data/borough_speed/borough_speed.csv ../data/test_gen_data
 '''
 
-home_dir = '/home/yiwenw/CMPT732_NY_CAB/' #alter your directory here
-sys.path.append(home_dir + "speed/ETL") #absolute path of ETL package
+etl_path = os.path.join(os.path.dirname(__file__) , "../ETL")
+sys.path.append(etl_path) #absolute path of ETL package
 from ETL import read_ETL
 
 #map borough name to index
@@ -84,4 +84,6 @@ if __name__ == '__main__':
 	assert spark.version >= '3.0' # make sure we have Spark 3.0+
 	spark.sparkContext.setLogLevel('WARN')
 	sc = spark.sparkContext
+	if not os.path.isdir(output):
+		os.makedirs(output) 
 	main(inputs, input2, output)
