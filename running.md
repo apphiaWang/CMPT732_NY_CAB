@@ -14,6 +14,8 @@ The input files can be directly downloaded from [NYC TLC website](https://www.ny
 
 # Initial ETL
 
+> Each section contain its processed toy dataset for testing. You may skip this part.
+
 Perform initial etl on the raw data. The etl process files one by one because the raw data has inconsistent schemas.
 
 Change this line of code to adapt to your machine.
@@ -25,7 +27,6 @@ The ETL program takes two arguments, a directory containing all raw data files, 
 ```sh
 spark-submit etl_collection/etl_general.py raw_data data
 ```
-
 
 # Transportations
 
@@ -193,6 +194,8 @@ This program visualizes the data of the distribution of subway stations.
 > Please run all the commands of time analysis under `$project_root/time_yga111`
 
 **1. Specialized ETL for time**
+
+> A processed toy dataset ready at `$project_root/time_yga111/time_input`. You may skip this part.
 
 Perform a ETL job to get the data needed for time analysis. 
 
