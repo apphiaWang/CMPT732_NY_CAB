@@ -1,13 +1,13 @@
 # Additional Required Packages
 Please install these packages on your environment for testing the corresponding section: 
 
-Package  | Transportation | Time | Tips | Speed
--|-|-|-|-
-**matplotlib** | o | o |o |o
-**seaborn** | o | - |o | o
-**geopandas** |o|-|o|o
-**holoviews** |- |- |-| o
-**shapely**|o|-|-|-
+Package  | Transportation | Time | Tips | Speed | installed on cluster?
+-|-|-|-|-| -
+**matplotlib** | o | o |o |o|o
+**seaborn** | o | - |o | o|-
+**geopandas** |o|-|o|o|-
+**holoviews** |- |- |-| o|-
+**shapely**|o|-|-|-|-
 # Initial ETL (can be skipped)
 
 The program read all files under the input directory and write the processed data into the output directory. The input files can be directly downloaded from [NYC TLC website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) or [s3](https://s3.console.aws.amazon.com/s3/buckets/nyc-tlc?region=us-east-1&tab=objects).
@@ -19,13 +19,6 @@ spark-submit etl.py input-rawdata output
 
 The test data can be found under `test_data`. It contains the trip records of _**yellow cab and green cab of Sep 2019**_. The data has been processed with initial etl.
 
-
-## Additional Required Packages
-Please install these packages on your environment: 
-- **matplotlib**
-- **seaborn**
-- **geopandas**: for visualizing geometric heatmap map of New York
-- **shapely** 
 
 # Transportations
 
