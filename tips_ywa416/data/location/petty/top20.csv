@@ -1,21 +1,21 @@
-locationID,count,0_tip_ratio,LocationID,Borough,Zone,service_zone
-262,1148,0.0205893430421292,1,EWR,Newark Airport,EWR
-236,2990,0.0221936863044914,2,Queens,Jamaica Bay,Boro Zone
-239,2351,0.0221957874264782,3,Bronx,Allerton/Pelham Gardens,Boro Zone
-237,2407,0.0225186876105118,4,Manhattan,Alphabet City,Yellow Zone
-141,2314,0.0234267433384627,6,Staten Island,Arrochar/Fort Wadsworth,Boro Zone
-229,1730,0.0238334688029536,7,Queens,Astoria,Boro Zone
-13,1313,0.0244921561678076,10,Queens,Baisley Park,Boro Zone
-162,2793,0.0254313680855907,12,Manhattan,Battery Park,Yellow Zone
-249,1761,0.0254420943134535,13,Manhattan,Battery Park City,Yellow Zone
-142,2503,0.0255319583001815,14,Brooklyn,Bay Ridge,Boro Zone
-138,4299,0.0268509612381797,15,Queens,Bay Terrace/Fort Totten,Boro Zone
-233,1580,0.0271174804771303,16,Queens,Bayside,Boro Zone
-161,2592,0.0271601316092797,17,Brooklyn,Bedford,Boro Zone
-234,2289,0.0275358483302858,18,Bronx,Bedford Park,Boro Zone
-113,1270,0.0278331762694777,20,Bronx,Belmont,Boro Zone
-158,1118,0.0291236844847348,21,Brooklyn,Bensonhurst East,Boro Zone
-263,2852,0.0293424694177803,23,Staten Island,Bloomfield/Emerson Hill,Boro Zone
-114,1170,0.0295156407669021,24,Manhattan,Bloomingdale,Yellow Zone
-143,1372,0.0303231224859656,25,Brooklyn,Boerum Hill,Boro Zone
-140,2146,0.0305041861522935,26,Brooklyn,Borough Park,Boro Zone
+locationID,Borough,Zone,service_zone,count,0_tip_ratio
+51,Bronx,Co-Op City,Boro Zone,878.0,0.8018264840182648
+222,Brooklyn,Starrett City,Boro Zone,342.0,0.7953488372093023
+81,Bronx,Eastchester,Boro Zone,433.0,0.7787769784172662
+35,Brooklyn,Brownsville,Boro Zone,717.0,0.7734627831715211
+254,Bronx,Williamsbridge/Olinville,Boro Zone,694.0,0.7719688542825361
+117,Queens,Hammels/Arverne,Boro Zone,349.0,0.7210743801652892
+213,Bronx,Soundview/Castle Hill,Boro Zone,921.0,0.7161741835147745
+76,Brooklyn,East New York,Boro Zone,1226.0,0.7029816513761468
+32,Bronx,Bronxdale,Boro Zone,330.0,0.7021276595744681
+242,Bronx,Van Nest/Morris Park,Boro Zone,796.0,0.6964129483814523
+47,Bronx,Claremont/Bathgate,Boro Zone,318.0,0.6838709677419355
+39,Brooklyn,Canarsie,Boro Zone,922.0,0.6506704304869443
+235,Bronx,University Heights/Morris Heights,Boro Zone,536.0,0.646562123039807
+248,Bronx,West Farms/Bronx River,Boro Zone,323.0,0.6447105788423154
+250,Bronx,Westchester Village/Unionport,Boro Zone,353.0,0.6418181818181818
+86,Queens,Far Rockaway,Boro Zone,308.0,0.6403326403326404
+108,Brooklyn,Gravesend,Boro Zone,322.0,0.6388888888888888
+183,Bronx,Pelham Bay,Boro Zone,232.0,0.6373626373626373
+205,Queens,Saint Albans,Boro Zone,933.0,0.6199335548172757
+60,Bronx,Crotona Park East,Boro Zone,202.0,0.6196319018404908

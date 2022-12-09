@@ -1,0 +1,51 @@
+locationID,Borough,Zone,service_zone,count,0_tip_ratio
+138,Queens,LaGuardia Airport,Airports,550.0,0.0034568366801797
+132,Queens,JFK Airport,Airports,446.0,0.0027070991550937
+230,Manhattan,Times Sq/Theatre District,Yellow Zone,409.0,0.0047860327416127
+162,Manhattan,Midtown East,Yellow Zone,392.0,0.003575141820039
+48,Manhattan,Clinton East,Yellow Zone,367.0,0.0037728478318975
+142,Manhattan,Lincoln Square East,Yellow Zone,360.0,0.0036755321864311
+238,Manhattan,Upper West Side North,Yellow Zone,353.0,0.0038234083573424
+186,Manhattan,Penn Station/Madison Sq West,Yellow Zone,338.0,0.0043533139280286
+68,Manhattan,East Chelsea,Yellow Zone,314.0,0.0041136089713357
+236,Manhattan,Upper East Side North,Yellow Zone,312.0,0.0023182375450458
+170,Manhattan,Murray Hill,Yellow Zone,311.0,0.0031208605948701
+239,Manhattan,Upper West Side South,Yellow Zone,307.0,0.0029028536848276
+237,Manhattan,Upper East Side South,Yellow Zone,293.0,0.0027441137355535
+161,Manhattan,Midtown Center,Yellow Zone,285.0,0.0029900855059539
+263,Manhattan,Yorkville West,Yellow Zone,284.0,0.0029252415384298
+75,Manhattan,East Harlem South,Boro Zone,272.0,0.0049542821755127
+151,Manhattan,Manhattan Valley,Yellow Zone,259.0,0.0062295555127958
+234,Manhattan,Union Sq,Yellow Zone,252.0,0.0030350110199804
+141,Manhattan,Lenox Hill West,Yellow Zone,250.0,0.0025343146199541
+229,Manhattan,Sutton Place/Turtle Bay North,Yellow Zone,246.0,0.003392822662952
+74,Manhattan,East Harlem North,Boro Zone,245.0,0.0059268935820209
+163,Manhattan,Midtown North,Yellow Zone,243.0,0.0038499318736335
+166,Manhattan,Morningside Heights,Boro Zone,234.0,0.0066813237015675
+231,Manhattan,TriBeCa/Civic Center,Yellow Zone,229.0,0.0032036485219848
+107,Manhattan,Gramercy,Yellow Zone,228.0,0.0028385393971838
+79,Manhattan,East Village,Yellow Zone,218.0,0.002299553802175
+233,Manhattan,UN/Turtle Bay South,Yellow Zone,218.0,0.0037467988931474
+164,Manhattan,Midtown South,Yellow Zone,215.0,0.0034991781000276
+43,Manhattan,Central Park,Yellow Zone,208.0,0.0045566070802663
+249,Manhattan,West Village,Yellow Zone,203.0,0.0029359018859192
+7,Queens,Astoria,Boro Zone,202.0,0.0116118647965049
+90,Manhattan,Flatiron,Yellow Zone,198.0,0.0033717049247326
+100,Manhattan,Garment District,Yellow Zone,193.0,0.0046347437683108
+41,Manhattan,Central Harlem,Boro Zone,184.0,0.0062951178623969
+140,Manhattan,Lenox Hill East,Yellow Zone,184.0,0.0026187324765523
+246,Manhattan,West Chelsea/Hudson Yards,Yellow Zone,181.0,0.0029884260405831
+137,Manhattan,Kips Bay,Yellow Zone,140.0,0.0025927366335166
+158,Manhattan,Meatpacking/West Village West,Yellow Zone,135.0,0.0035207594408512
+148,Manhattan,Lower East Side,Yellow Zone,132.0,0.0030196966577448
+50,Manhattan,Clinton West,Yellow Zone,129.0,0.0035449299258037
+113,Manhattan,Greenwich Village North,Yellow Zone,127.0,0.0027871047029648
+13,Manhattan,Battery Park City,Yellow Zone,124.0,0.0023159821445247
+262,Manhattan,Yorkville East,Yellow Zone,121.0,0.0021725469072627
+143,Manhattan,Lincoln Square West,Yellow Zone,119.0,0.0026335590669676
+145,Queens,Long Island City/Hunters Point,Boro Zone,116.0,0.0084265581868371
+87,Manhattan,Financial District North,Yellow Zone,114.0,0.0023357305304566
+24,Manhattan,Bloomingdale,Yellow Zone,112.0,0.0069379916991885
+42,Manhattan,Central Harlem North,Boro Zone,106.0,0.0058098109070978
+223,Queens,Steinway,Boro Zone,103.0,0.0116939146230699
+226,Queens,Sunnyside,Boro Zone,101.0,0.011420171867933

@@ -18,7 +18,7 @@ def draw_map(fig_name, df, col, index='locationID'):
     fig=ax.get_figure()
     fig.savefig(fig_name)
 
-def join_data(spark_dir, output_path, index = 'LocationID'):
+def join_data(spark_dir, output_path, col, index = 'locationID'):
     filepath = "" # tailored for reading spark output
     for f in os.listdir(spark_dir):
         if f.startswith("part"):
@@ -27,11 +27,11 @@ def join_data(spark_dir, output_path, index = 'LocationID'):
     if not os.path.isdir(output_path):
         os.makedirs(output_path) 
     df = pd.read_csv(filepath)
-    joined = df.join(lookup_zone, lsuffix=index, rsuffix='LocationID')
-    joined.to_csv('%s/full.csv'%output_path, index=False)
+    joined = lookup_zone.set_index('LocationID').join(df.set_index(index)).sort_values(by=col,  ascending=False)
+    joined.to_csv('%s/full.csv'%output_path, index=True, index_label=index,)
     joined = joined[joined["count"]> count_threshold] 
-    joined.to_csv('%s/>%i.csv'%(output_path,count_threshold), index=False)
-    joined.head(20).to_csv('%s/top20.csv'%output_path, index=False)
+    joined.to_csv('%s/>%i.csv'%(output_path,count_threshold), index=True, index_label=index)
+    joined.head(20).to_csv('%s/top20.csv'%output_path, index=True, index_label=index)
     return df
 
 def main(input, output):
@@ -39,16 +39,16 @@ def main(input, output):
     spark_dirs = ["dropoff", "pickup", "total", "petty", "generous"]
     indexes = ['DOLocationID', 'PULocationID', 'locationID', 'locationID', 'locationID']
     cols = ["avg", "avg", "avg", "0_tip_ratio", "count"]
-    fig_names = ["mean_tip_dropoff", "mean_tip_pickup", "mean_tip_ny", "0_tip_ratio", "0_tip_ny"]
+    fig_names = ["mean_tip_dropoff", "mean_tip_pickup", "mean_tip_ny", "0_tip_ratio", "generous_tip_ny"]
     for i in range(len(spark_dirs)):
-        df = join_data(os.path.join(input, spark_dirs[i]), os.path.join(output, spark_dirs[i]))
+        df = join_data(os.path.join(input, spark_dirs[i]), os.path.join(output, spark_dirs[i]), cols[i], indexes[i])
         draw_map(os.path.join(output, 'figures', fig_names[i]), df, cols[i], indexes[i])
     return
 
 if __name__ == '__main__':
     input = sys.argv[1]
     output = sys.argv[2]
-    count_threshold = int(sys.argv[2]) if len(sys.argv) > 3 else 1000
+    count_threshold = int(sys.argv[3]) if len(sys.argv) > 3 else 1000
     if not os.path.isdir(output):
         os.makedirs(output) 
         os.makedirs(os.path.join(output, 'figures')) 

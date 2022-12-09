@@ -35,12 +35,12 @@ spark-submit etl_collection/etl_general.py raw_data data
 0. Please find all programs below under `$project_root/transportation_aaa264`
 
 1. **etl_PU_DO/code/etl_parquet_all.py**
-
+> Processed data is ready. You may skip this part.
 Usage:
 ```
-spark-submit etl_parquet_all.py ../processed_data ../output_all
+spark-submit etl_parquet_all.py $raw_data_path ../output_all
 ```
-*[REMINDER] processed_data can be downloaded from NYC open data*
+*[REMINDER] raw_data can be downloaded from NYC open data*
 
 Description:
 This program will yield the parquet files after the initial ETL.

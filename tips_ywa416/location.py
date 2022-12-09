@@ -35,6 +35,8 @@ def main(inputs, outputs):
             AND trip_distance < 180
             AND year(pickup_datetime) < 2022 AND year(pickup_datetime) > 2016
             AND VendorID < 3
+            AND DOLocationID < 264
+            AND PULocationID < 264
     """).createOrReplaceTempView("data")
 
     # mean, median of tip ratio by pickup location

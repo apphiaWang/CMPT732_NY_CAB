@@ -1,1 +1,21 @@
-locationID,count,0_tip_ratio,LocationID,Borough,Zone,service_zone
+locationID,Borough,Zone,service_zone,count,0_tip_ratio
+138,Queens,LaGuardia Airport,Airports,550.0,0.0034568366801797
+132,Queens,JFK Airport,Airports,446.0,0.0027070991550937
+230,Manhattan,Times Sq/Theatre District,Yellow Zone,409.0,0.0047860327416127
+162,Manhattan,Midtown East,Yellow Zone,392.0,0.003575141820039
+48,Manhattan,Clinton East,Yellow Zone,367.0,0.0037728478318975
+142,Manhattan,Lincoln Square East,Yellow Zone,360.0,0.0036755321864311
+238,Manhattan,Upper West Side North,Yellow Zone,353.0,0.0038234083573424
+186,Manhattan,Penn Station/Madison Sq West,Yellow Zone,338.0,0.0043533139280286
+68,Manhattan,East Chelsea,Yellow Zone,314.0,0.0041136089713357
+236,Manhattan,Upper East Side North,Yellow Zone,312.0,0.0023182375450458
+170,Manhattan,Murray Hill,Yellow Zone,311.0,0.0031208605948701
+239,Manhattan,Upper West Side South,Yellow Zone,307.0,0.0029028536848276
+237,Manhattan,Upper East Side South,Yellow Zone,293.0,0.0027441137355535
+161,Manhattan,Midtown Center,Yellow Zone,285.0,0.0029900855059539
+263,Manhattan,Yorkville West,Yellow Zone,284.0,0.0029252415384298
+75,Manhattan,East Harlem South,Boro Zone,272.0,0.0049542821755127
+151,Manhattan,Manhattan Valley,Yellow Zone,259.0,0.0062295555127958
+234,Manhattan,Union Sq,Yellow Zone,252.0,0.0030350110199804
+141,Manhattan,Lenox Hill West,Yellow Zone,250.0,0.0025343146199541
+229,Manhattan,Sutton Place/Turtle Bay North,Yellow Zone,246.0,0.003392822662952
