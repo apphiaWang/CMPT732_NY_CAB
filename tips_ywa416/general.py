@@ -36,7 +36,7 @@ def main(inputs, outputs):
 
     # check if different vendor has different tipping 
     print("tip-vendor")
-    spark.sql("""SELECT mean(tip_ratio),  percentile_approx(tip_ratio, 0.5), VendorID FROM data GROUP BY VendorID""").show()
+    spark.sql("""SELECT mean(tip_ratio) as mean,  percentile_approx(tip_ratio, 0.5) as median, VendorID FROM data GROUP BY VendorID""").show()
     
     # draw a heatmap of mean tip percent by workday and hour of pikcup
     # the result figure shows that workday and hour do not give useful information about tipping

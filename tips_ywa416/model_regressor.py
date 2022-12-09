@@ -34,10 +34,10 @@ def main(inputs, model_file):
                         AND total_amount - tip_amount - fare_amount <= 20
                     """
     )
-    test = day_transformer.transform(train)
 
+    selected_features = [ "month", "day", "hour", "PULocationID", "DOLocationID", "trip_distance", "duration", "other_amount", "fare_amount"]
     feature_assembler = VectorAssembler(outputCol="features").setHandleInvalid("skip")
-    feature_assembler.setInputCols([ "month", "day", "hour", "PULocationID", "DOLocationID", "trip_distance", "duration", "other_amount", "fare_amount"])
+    feature_assembler.setInputCols(selected_features)
     estimator = GBTRegressor(featuresCol="features", labelCol="tip_ratio")
     pipeline = Pipeline(stages=[day_transformer, feature_assembler, estimator])
     model = pipeline.fit(train)
@@ -55,6 +55,9 @@ def main(inputs, model_file):
     print('Validation score for regressor:')
     print('r2 =', val_r2)
     print('rmse =', val_rmse)
+    # comment the three lines below if not using tree based model
+    print("feature importances:")
+    print(selected_features)
     print(model.stages[-1].featureImportances)
     # output model
     model.write().overwrite().save(model_file)
