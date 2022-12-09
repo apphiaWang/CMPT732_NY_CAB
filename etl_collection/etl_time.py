@@ -9,10 +9,11 @@ name = "{col}_tripdata_20{y}-{m}.parquet"
 color = ['yellow','green']
 mon = range(1,13)
 year = range(17,22) 
-output_name = "/{col}_tripdata_20{y}-{m}.parquet"
+output_name = "/{col}_tripdata_20{y}-{m}.parquet.gzip"
 
 def write_parquet_with_specific_file_name(sc, df, path, filename):
-    df.repartition(1).write.option("header", "true").option("mapreduce.fileoutputcommitter.marksuccessfuljobs","false").parquet(path, mode='append')
+    df.repartition(1).write.option("header", "true").option("mapreduce.fileoutputcommitter.marksuccessfuljobs","false")\
+        .parquet(path, compression='gzip', mode='append')
     try:
         sc_uri = sc._gateway.jvm.java.net.URI
         sc_path = sc._gateway.jvm.org.apache.hadoop.fs.Path
@@ -77,7 +78,9 @@ def main(input, output):
                     if 'trip_type' in data.columns:
                         data = data.drop(data['trip_type'])
                     if 'congestion_surcharge' in data.columns:
-                        data = data.drop(data['congestion_surcharge']).drop(data['airport_fee'])
+                        data = data.drop(data['ehail_fee']).drop(data['congestion_surcharge'])
+                    if 'airport_fee' in data.columns:
+                        data = data.drop(data['airport_fee'])
                     del_useless = data.drop(data['RatecodeID']).drop(data['PULocationID']).drop(data['DOLocationID'])\
                     .drop(data['fare_amount']).drop(data['extra']).drop(data['total_amount']).drop(data['trip_distance'])\
                     .drop(data['mta_tax']).drop(data['tip_amount']).drop(data['tolls_amount']).drop(data['speed'])\

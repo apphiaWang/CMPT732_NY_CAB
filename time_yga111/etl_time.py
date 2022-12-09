@@ -32,13 +32,14 @@ def write_parquet_with_specific_file_name(sc, df, path, filename):
     except Exception as e:
         raise Exception("Error renaming the part file to {}:".format(filename, e))
 
-def main(output):
+def main(input, output):
     # main logic starts here
     for i in range(len(color)):
         for k in range(len(year)):
             for j in range(len(mon)):
                 file = name.format(col = color[i], m = "%02d"%mon[j], y = year[k])
                 myoutput = output_name.format(col = color[i],m = "%02d"%mon[j], y = year[k])
+                file = os.path.join(input, file)
                 if os.path.exists(file):
 
                     # rename the column of pickup_time and dropoff_time because of difference in naming of yellow and green cabs dataset.
@@ -86,9 +87,10 @@ def main(output):
                     
 
 if __name__ == '__main__':
-    output = sys.argv[1]
-    spark = SparkSession.builder.appName('etl').getOrCreate()
+    input = sys.argv[1]
+    output = sys.argv[2]
+    spark = SparkSession.builder.appName('Time Etl').getOrCreate()
     assert spark.version >= '3.0' # make sure we have Spark 3.0+
     spark.sparkContext.setLogLevel('WARN')
     sc = spark.sparkContext
-    main(output)
+    main(input, output)

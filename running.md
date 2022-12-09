@@ -203,7 +203,7 @@ fs = file_system.get(sc_uri("172.29.89.207"), configuration())#need adaptation o
 
 The time ETL program takes two arguments, the input directory containing the raw data, and the output directory for ETL results.
 ```sh
-spark-submit etl_time.py ../raw_data your_input
+spark-submit etl_time.py ../raw_data time_input
 ```
 
 **2. Query**
@@ -225,7 +225,7 @@ Make sure everytime just run one of these five functions.
 This query_time.py program takes two arguments, the input data path and the output file path. The demo output csv file can be found under `$project_root/time_yga111/data/month/month-2017.csv`. 
 
 ```sh
-spark-submit query_time.py your_input your_output
+spark-submit query_time.py time_input output
 ```
 
 The query_passenger.py does the queries about passengers on these five years' data respectively, too.
@@ -233,7 +233,7 @@ The query_passenger.py does the queries about passengers on these five years' da
 This query_passenger.py program takes two arguments, the input data path and the output file path. The demo output csv file can be found under `$project_root/time_yga111/data/passenger/passenger-2017.csv`. 
 
 ```sh
-spark-submit query_passenger.py your_input your_output
+spark-submit query_passenger.py time_input output
 ```
 
 **3. Visualization**
@@ -266,7 +266,7 @@ spark-submit query_passenger.py your_input your_output
 
 # Speed Analysis
 
-> Please run all the commands of speed analysis under `$project_root/speed_ywa422`
+> Please run all the commands of speed analysis under the directory containing the corresponding program file.
 
 1. #### ETL
 
