@@ -1,0 +1,21 @@
+locationID,count,0_tip_ratio,LocationID,Borough,Zone,service_zone
+262,1148,0.0205893430421292,1,EWR,Newark Airport,EWR
+236,2990,0.0221936863044914,2,Queens,Jamaica Bay,Boro Zone
+239,2351,0.0221957874264782,3,Bronx,Allerton/Pelham Gardens,Boro Zone
+237,2407,0.0225186876105118,4,Manhattan,Alphabet City,Yellow Zone
+141,2314,0.0234267433384627,6,Staten Island,Arrochar/Fort Wadsworth,Boro Zone
+229,1730,0.0238334688029536,7,Queens,Astoria,Boro Zone
+13,1313,0.0244921561678076,10,Queens,Baisley Park,Boro Zone
+162,2793,0.0254313680855907,12,Manhattan,Battery Park,Yellow Zone
+249,1761,0.0254420943134535,13,Manhattan,Battery Park City,Yellow Zone
+142,2503,0.0255319583001815,14,Brooklyn,Bay Ridge,Boro Zone
+138,4299,0.0268509612381797,15,Queens,Bay Terrace/Fort Totten,Boro Zone
+233,1580,0.0271174804771303,16,Queens,Bayside,Boro Zone
+161,2592,0.0271601316092797,17,Brooklyn,Bedford,Boro Zone
+234,2289,0.0275358483302858,18,Bronx,Bedford Park,Boro Zone
+113,1270,0.0278331762694777,20,Bronx,Belmont,Boro Zone
+158,1118,0.0291236844847348,21,Brooklyn,Bensonhurst East,Boro Zone
+263,2852,0.0293424694177803,23,Staten Island,Bloomfield/Emerson Hill,Boro Zone
+114,1170,0.0295156407669021,24,Manhattan,Bloomingdale,Yellow Zone
+143,1372,0.0303231224859656,25,Brooklyn,Boerum Hill,Boro Zone
+140,2146,0.0305041861522935,26,Brooklyn,Borough Park,Boro Zone

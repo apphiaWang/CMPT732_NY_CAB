@@ -4,7 +4,7 @@ assert sys.version_info >= (3, 5) # make sure we have Python 3.5+
 from pyspark.sql import SparkSession, types, functions
 from pyspark.ml import Pipeline
 from pyspark.ml.feature import VectorAssembler, SQLTransformer
-from pyspark.ml.classification import MultilayerPerceptronClassifier, DecisionTreeClassifier, RandomForestClassifier
+from pyspark.ml.classification import DecisionTreeClassifier, RandomForestClassifier
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
 def main(inputs, model_file):

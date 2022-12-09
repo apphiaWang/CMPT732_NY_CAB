@@ -51,8 +51,8 @@ def main(inputs, outputs):
         GROUP BY DOLocationID ORDER BY 2 DESC
     """).write.option("header",True).csv('%s/dropoff'%outputs, mode='overwrite')
 
+    # mean tip ratio, max tip amount, trip count of total
     combine_location()
-    
     total_location = spark.sql("""
         SELECT locationID, sum(avg*count)/sum(count) as avg, max(max) as max, sum(count) as count  
         FROM total 
@@ -62,6 +62,7 @@ def main(inputs, outputs):
     total_location.write.option("header",True).csv('%s/total'%outputs, mode='overwrite')
     total_location.createOrReplaceTempView("total_location")
     
+    # count of trips with no tip, and the ratio of 0-tip count to the total trip count
     spark.sql("""
         SELECT * FROM data WHERE tip_amount = 0
     """).createOrReplaceTempView("petty")
@@ -75,6 +76,7 @@ def main(inputs, outputs):
     """)
     petty.write.option("header",True).csv('%s/petty'%outputs, mode='overwrite')
     
+    # count of trips with tip_ratio > 0.4, and the ratio of generous tipping count to the total trip count
     spark.sql("""
         SELECT * FROM data WHERE tip_ratio >= 0.4
     """).createOrReplaceTempView("generous")

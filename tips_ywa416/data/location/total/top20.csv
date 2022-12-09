@@ -1,0 +1,21 @@
+locationID,avg,max,count,LocationID,Borough,Zone,service_zone
+40,0.1941895931075717,68.0,6905,3,Bronx,Allerton/Pelham Gardens,Boro Zone
+52,0.1940185542891572,24.95,5721,4,Manhattan,Alphabet City,Yellow Zone
+112,0.1923865426229208,25.0,9596,5,Staten Island,Arden Heights,Boro Zone
+54,0.192229112817906,21.69,1364,6,Staten Island,Arrochar/Fort Wadsworth,Boro Zone
+138,0.1915953444691458,171.2,160106,7,Queens,Astoria,Boro Zone
+181,0.190911978826253,66.5,14947,8,Queens,Astoria Park,Boro Zone
+223,0.1906405202041563,55.0,8835,9,Queens,Auburndale,Boro Zone
+33,0.1890239205259221,44.0,16149,10,Queens,Baisley Park,Boro Zone
+7,0.1879826378631467,110.0,17424,11,Brooklyn,Bath Beach,Boro Zone
+257,0.1870386931595782,55.0,2469,12,Manhattan,Battery Park,Yellow Zone
+202,0.1867840386490108,25.0,1792,13,Manhattan,Battery Park City,Yellow Zone
+189,0.1865887999232063,40.0,4189,14,Brooklyn,Bay Ridge,Boro Zone
+255,0.1864715331512594,100.0,13777,15,Queens,Bay Terrace/Fort Totten,Boro Zone
+256,0.1856076959709646,236.05,9277,16,Queens,Bayside,Boro Zone
+145,0.1856069676703342,60.0,13789,17,Brooklyn,Bedford,Boro Zone
+265,0.1854546053868951,178.08,4502,18,Bronx,Bedford Park,Boro Zone
+230,0.1852889174794769,100.58,85606,19,Queens,Bellerose,Boro Zone
+260,0.1850744148494718,50.0,5756,20,Bronx,Belmont,Boro Zone
+43,0.1847349298855718,121.5,45711,22,Brooklyn,Bensonhurst West,Boro Zone
+125,0.1845780163200659,111.11,21662,24,Manhattan,Bloomingdale,Yellow Zone

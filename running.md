@@ -1,11 +1,14 @@
-## Additional Required Packages
-Please install these packages on your environment: 
-- **matplotlib**
-- **seaborn**
-- **geopandas**: for visualizing geometric heatmap map of New York
+# Additional Required Packages
+Please install these packages on your environment for testing the corresponding section: 
 
-
-## Initial ETL (can be skipped)
+Package  | Transportation | Time | Tips | Speed
+-|-|-|-|-
+**matplotlib** | o | o |o |o
+**seaborn** | o | - |o | o
+**geopandas** |o|-|o|o
+**holoviews** |- |- |-| o
+**shapely**|o|-|-|-
+# Initial ETL (can be skipped)
 
 The program read all files under the input directory and write the processed data into the output directory. The input files can be directly downloaded from [NYC TLC website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) or [s3](https://s3.console.aws.amazon.com/s3/buckets/nyc-tlc?region=us-east-1&tab=objects).
 ```sh
@@ -16,6 +19,173 @@ spark-submit etl.py input-rawdata output
 
 The test data can be found under `test_data`. It contains the trip records of _**yellow cab and green cab of Sep 2019**_. The data has been processed with initial etl.
 
+
+## Additional Required Packages
+Please install these packages on your environment: 
+- **matplotlib**
+- **seaborn**
+- **geopandas**: for visualizing geometric heatmap map of New York
+- **shapely** 
+
+# Transportations
+
+1. **etl_PU_DO/code/etl_parquet_all.py**
+
+Usage:
+```
+spark-submit etl_parquet_all.py ../processed_data ../output_all
+```
+*[REMINDER] processed_data can be downloaded from NYC open data*
+
+Description:
+This program will yield the parquet files after the initial ETL.
+
+2. **etl_bus_stop/code/bus_stop_etl.py**
+
+Usage:
+```
+python bus_stop_etl.py 
+```
+
+Description:
+This program will yield the bus stop's geographic information after the ETL process.
+
+3. **etl_subway_stn/code/subway_stn_etl.py**
+
+Usage:
+```
+python subway_stn_etl.py 
+```
+
+Description:
+This program will yield the subway station's geographic information after the ETL process.
+
+4. **etl_parking_lot/code/parking_lot_etl.py**
+
+Usage:
+```
+python parking_lot_etl.py 
+```
+
+Description:
+This program will yield the parking lot's geographic information after the ETL process.
+
+5. **analysis_PU_DO/code/**
+
+**up_and_down_by_color.py **
+
+Usage:
+```
+spark-submit up_and_down_by_color.py  ../processed_data ../output_by_color
+```
+
+Description:
+This program aggregates the data of pick-up and drop-off orders according to the color of the cab.
+
+**up_and_down_by_season.py**
+
+Usage:
+```
+spark-submit up_and_down_by_season.py ../processed_data ../output_by_season
+```
+
+Description:
+This program aggregates the data of pick-up and drop-off orders according to the season.
+
+**up_and_down_by_year.py**
+
+Usage:
+```
+spark-submit up_and_down_by_year.py ../processed_data ../output_by_year
+```
+
+Description:
+This program aggregates the data of pick-up and drop-off orders according to the year.
+
+**up_and_down_total.py**
+
+Usage:
+```
+spark-submit up_and_down_total.py ../processed_data ../output_total
+```
+
+Description:
+This program aggregates the statistics of drop-off and pick-up orders for five years.
+
+6. **analysis_bus_stop/code/stat_on_bus_stop.py**
+
+Usage:
+```
+spark-submit stat_on_bus_stop.py ../processed_data ../output
+```
+
+Description:
+This program produces data on the distribution of bus stops according to each zone.
+
+7. **analysis_lots/code/stat_on_loc.py**
+
+Usage:
+```
+spark-submit stat_on_loc.py ../../etl_parking_lot/output/lots_with_location.parquet ../data
+```
+
+Description:
+This program produces data on the distribution of parking lots according to each zone.
+
+8. **analysis_subway_stn/code/stat_on_sub.py**
+
+Usage:
+```
+spark-submit stat_on_sub.py ../processed_data ../output
+```
+
+Description:
+This program produces data on the distribution of subway stations according to each zone.
+
+8. **visualizations/code/**
+
+**plot_nyc.py**
+
+Usage:
+```
+spark-submit plot_nyc.py ../../analysis_PU_DO/output_by_color ../output_color
+spark-submit plot_nyc.py ../../analysis_PU_DO/output_by_season ../output_season
+spark-submit plot_nyc.py ../../analysis_PU_DO/output_total ../output_total
+spark-submit plot_nyc.py ../../analysis_PU_DO/output_by_year ../output_year
+```
+
+Description:
+This program visualizes the data related to the distribution of taxi orders.
+
+**plot_nyc_bus_stop.py**
+
+Usage:
+```
+spark-submit plot_nyc_bus_stop.py ../output_bus_stop
+```
+
+Description:
+This program visualizes the data of the distribution of bus stops.
+
+**plot_nyc_parking.py**
+
+Usage:
+```
+spark-submit plot_nyc_parking.py ../output_parking_lot
+```
+
+Description:
+This program visualizes the data of the distribution of parking lots.
+
+**plot_nyc_sub_stn.py**
+
+Usage:
+```
+spark-submit plot_nyc_sub_stn.py ../output_sub_stn
+```
+
+Description:
+This program visualizes the data of the distribution of subway stations.
 
 # Time Analysis
 
@@ -220,7 +390,7 @@ spark-submit time_yga111/query_passenger.py 2017_input 2017_output
     The Python files under the directory `/speed_aws_ywa422` contain all runnable scripts that perform some of the functions above. So basically nothing new in this directory, only necessary alternations for large-scale data are done.
 
 
-## Tip Analysis
+# Tip Analysis
 
 1. general query a month's data
 This program will run some general queries about tips and fares on one month of data, looking at abnormal data and if some features are related to tipping, in order to determine the final ETL for tip analysis on 5 years of data. 
@@ -244,20 +414,31 @@ spark-submit tips_ywa416/overview.py test_data your_output
 The visualization is done by Echarts, you may find the demo figures under `tips_ywa416/figures/overview`. 
 
 3. tipping by location
-This step contains a spark program analyzing the data and a python program for further and visualizing results.
 
-This spark program will 1. get the distribution of tipping over the 5 years, 2. get daily mean, max, median, trip amount of the 5 year. 
-The spark program takes two arguments, the input data path and the output data path.
+This step contains 1. a spark program analyzing tips by location and 2. a python program joins the data with taxi zone lookup file and visualizes results.
+ 
+The spark program takes two arguments, the input data path and the output data path. The program will generate 5 results:
+1. pickup: the mean and median tip_ratio, and trip count by pickup location
+2. dropoff: the mean and median tip_ratio, and trip count by dropoff location
+3. total: the mean tip_ratio, max tip_amount, and trip count by location
+4. petty: the count of trip with 0-tip (considered as petty tipper), and the ratio of petty count to total count by location
+5. generous: the count of trip with tip_ratio > 0.4(considered as generous tipper), and the ratio of generous count to total count by location
+
+The python program takes three arguments, an input (the output data path by pyspark), and an output path for new results and figures, and the threshold count number for filtering valid data. The third arg is conditional, if not given, the program will use 1000 to filter valid data. The program will generate 3 files for each result produced by the spark program:
+1. A full table of the result joined with taxi zone.
+2. A top 20 table of the corresponding attribute by the spark result, for the first three is average tip ratio, and the last three is petty/generous trip count.
+3. A >count_threshold table. The record with small count are filtered because they might be seriously affected by outliers.
+The program will also visualize the 5 full results. The demo figures can be found under `tips_ywa416/figures/location`.
 ```sh
 spark-submit tips_ywa416/location.py test_data your_output
-python3 
+python3 tips_ywa416/location_viz.py your_output result
 ```
-> Please notice that 
-
+> The python program is designed for reading spark output structure directly. Please provide the exactly same spark output directory for the first argument
 4. tipping models
 
-The program takes two arguments, the input data path and the output model path. The program will print out the evaluation score of test and validation, also the feature importances of tree-based methods.
+The program takes two arguments, the input data path and the output model path. The program will print out the evaluation score of test and validation, also the feature importances of tree-based methods. The default model is GBT for regressor, and RandomForest for classifier.
 ```sh
 spark-submit tips_ywa416/model_regressor.py test_data your_model_output
 spark-submit tips_ywa416/model_classifier.py test_data your_model_output
 ```
+> Please notice that these programs have bad performance on the dataset. They are mainly used give inspiration of important features.
