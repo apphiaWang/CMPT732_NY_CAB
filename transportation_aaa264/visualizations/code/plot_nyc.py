@@ -1,5 +1,4 @@
 import geopandas 
-import geoplot
 from shapely import wkt
 import pandas as pd
 from shapely.geometry import Point, Polygon

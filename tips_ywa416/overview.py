@@ -31,6 +31,11 @@ def main(inputs, outputs):
         FROM tb
     """).createOrReplaceTempView("data")
 
+    # print the yearly mean and median
+    spark.sql("""
+        SELECT year, mean(tip_ratio) * 100 as mean_percent, percentile_approx(tip_ratio, 0.5)*100 as median_percent FROM data
+        GROUP BY year ORDER BY year    """).show()
+
     # distribution of tips over year
     spark.sql("""
         SELECT year, tip_range_index, count(*) as count FROM data group by year, tip_range_index

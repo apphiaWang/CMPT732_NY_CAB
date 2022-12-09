@@ -8,6 +8,8 @@ Package  | Transportation | Time | Tips | Speed | installed on cluster?
 **geopandas** |o|-|o|o|-
 **holoviews** |- |- |-| o|-
 **shapely**|o|-|-|-|-
+**pyarrow**|o|-|-|-|-
+**fastparquet**|o|-|-|-|-
 
 # Get the data
 The input files can be directly downloaded from [NYC TLC website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) or [s3](https://s3.console.aws.amazon.com/s3/buckets/nyc-tlc?region=us-east-1&tab=objects).
@@ -34,8 +36,8 @@ spark-submit etl_collection/etl_general.py raw_data data
 
 0. Please find all programs below under `$project_root/transportation_aaa264`
 
+> Step 1 to 4 are all doing etl work. Processed data is ready for analysis. You may skip the 4 steps.
 1. **etl_PU_DO/code/etl_parquet_all.py**
-> Processed data is ready. You may skip this part.
 Usage:
 ```
 spark-submit etl_parquet_all.py $raw_data_path ../output_all
@@ -75,7 +77,7 @@ python parking_lot_etl.py
 Description:
 This program will yield the parking lot's geographic information after the ETL process.
 
-5. **analysis_PU_DO/code/up_and_down_by_color.py **
+5. **analysis_PU_DO/code/up_and_down_by_color.py**
 
 Usage:
 ```
@@ -402,6 +404,10 @@ spark-submit model_classifier.py test_data your_output/model_classifier
 All results will be written to `$project_root/tips_ywa416/your_output`.
 
 ## detailed explanation
+
+0. `test_data`
+Contains the 2 ETLed trip data of yellow cab and green cab of Sep 2019.
+
 1. general query a month's data
 This program will run some general queries about tips and fares on one month of data, looking at abnormal data and if some features are related to tipping, in order to determine the final ETL for tip analysis on 5 years of data. 
 
@@ -412,9 +418,9 @@ spark-submit general.py test_data your_output
 Detailed explanantion are written in the program comments. The demo output figures can be found under `figures/etl`.
 
 2. tipping overview
-This program will 1. get the distribution of tipping over the 5 years, 2. get daily mean, max, median, trip amount of the 5 year. The organized output files of yellow cab can be found under `data/overivew`.
+This program will 1. get the distribution of tipping over the 5 years, 2. get daily mean, max, median, trip amount of the 5 year. The organized results of 5-year data can be found under `data/overivew`.
 
-> Please notice that this program does not include group by green/yellow cabs considering reducing shuffle. If you want to compare yellow cabs with green cabs, please run separately on the two dataset.
+> Please notice that this program does not include group by green/yellow cabs considering reducing shuffle. If you want to compare yellow cabs with green cabs, please run separately on the two data files.
 
 The program takes two arguments, the input data path and the output data path.
 ```sh
@@ -428,16 +434,16 @@ The visualization is done by Echarts, you may find the demo figures under `figur
 This step contains 1. a spark program analyzing tips by location and 2. a python program joins the data with taxi zone lookup file and visualizes results.
  
 The spark program takes two arguments, the input data path and the output data path. The program will generate 5 results:
-1. pickup: the mean and median tip_ratio, and trip count by pickup location
-2. dropoff: the mean and median tip_ratio, and trip count by dropoff location
-3. total: the mean tip_ratio, max tip_amount, and trip count by location
-4. petty: the count of trip with 0-tip (considered as petty tipper), and the ratio of petty count to total count by location
-5. generous: the count of trip with tip_ratio > 0.4(considered as generous tipper), and the ratio of generous count to total count by location
+- pickup: the mean and median tip_ratio, and trip count by pickup location
+- dropoff: the mean and median tip_ratio, and trip count by dropoff location
+- total: the mean tip_ratio, max tip_amount, and trip count by location
+- petty: the count of trip with 0-tip (considered as petty tipper), and the ratio of petty count to total count by location
+- generous: the count of trip with tip_ratio > 0.4(considered as generous tipper), and the ratio of generous count to total count by location
 
 The python program takes three arguments, an input (the output data path by pyspark), and an output path for new results and figures, and the threshold count number for filtering valid data. The third arg is conditional, if not given, the program will use 1000 to filter valid data. The program will generate 3 files for each result produced by the spark program:
-1. A full table of the result joined with taxi zone.
-2. A top 20 table of the corresponding attribute by the spark result, for the first three is average tip ratio, and the last three is petty/generous trip count.
-3. A >count_threshold table. The record with small count are filtered because they might be seriously affected by outliers.
+- A full table of the result joined with taxi zone.
+- A top 20 table of the corresponding attribute by the spark result, for the first three is average tip ratio, and the last three is petty/generous trip count.
+- A >count_threshold table. The record with small count are filtered because they might be seriously affected by outliers.
 The program will also visualize the 5 full results. The demo figures can be found under `figures/location`.
 ```sh
 spark-submit location.py test_data your_output

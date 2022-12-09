@@ -31,17 +31,10 @@ def main(inputs, outputs):
         FROM tb
     """).createOrReplaceTempView("data")
     
-    # this part is omitted when running in AWS 
-    tip_dict = os.path.join(os.path.dirname(__file__), 'data/tip_range_dict.csv')
-    spark.read.option("header",True).csv(tip_dict).createOrReplaceTempView("tip_range")
+    # print the yearly mean and median
     spark.sql("""
-    SELECT t.year, r.range, t.count, t.ratio_of_year
-    FROM(   SELECT year, tip_range_index, count, count/total as ratio_of_year FROM 
-         (SELECT year, tip_range_index, count, SUM(count) OVER(PARTITION BY year) AS total FROM distribution)
-         ) AS t, tip_range as r
-    WHERE t.tip_range_index = r.tip_range_index
-    ORDER BY t.year, t.tip_range_index
-    """).write.option("header",True).csv('%s/distribution-rangemapped'%outputs, mode='overwrite')
+        SELECT year, mean(tip_ratio) * 100 as mean_percent, percentile_approx(tip_ratio, 0.5)*100 as median_percent FROM data
+        GROUP BY year ORDER BY year    """).show()
 
     # mean, median, max of dates
     daily = spark.sql("""
