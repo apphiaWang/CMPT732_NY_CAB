@@ -1,4 +1,0 @@
-
-|    pickup_datetime|   dropoff_datetime|trip_distance|PULocationID|DOLocationID|fare_amount|tip_amount|total_amount|
-|-------------------|-------------------|-------------|------------|------------|-----------|----------|------------|
-|2020-07-02 05:50:12|2020-07-02 05:55:46|         1.43|         233|         107|        6.5|    1001.0|      1010.8|
