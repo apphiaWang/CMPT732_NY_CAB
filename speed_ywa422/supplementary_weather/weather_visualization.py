@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 '''
 Run Command
-python3 weather_visualization.py weather_ETL_data/weather_data.csv figure_dir
+python3 weather_visualization.py weather_ETL_data/weather_data.csv weather_figure
 
 Function
 Draw nyc 2019 temperature plot
@@ -12,7 +12,7 @@ Draw nyc 2019 temperature plot
 
 def averaget(data, output):
 	data.plot()
-	plt.savefig( output + '/avgt')
+	plt.savefig( output + '/weather')
 
 def main(inputs, output):
 	data = pd.read_csv(inputs)
