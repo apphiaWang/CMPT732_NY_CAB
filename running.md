@@ -8,19 +8,30 @@ Package  | Transportation | Time | Tips | Speed | installed on cluster?
 **geopandas** |o|-|o|o|-
 **holoviews** |- |- |-| o|-
 **shapely**|o|-|-|-|-
-# Initial ETL (can be skipped)
 
-The program read all files under the input directory and write the processed data into the output directory. The input files can be directly downloaded from [NYC TLC website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) or [s3](https://s3.console.aws.amazon.com/s3/buckets/nyc-tlc?region=us-east-1&tab=objects).
-```sh
-spark-submit etl.py input-rawdata output
+# Get the data
+The input files can be directly downloaded from [NYC TLC website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) or [s3](https://s3.console.aws.amazon.com/s3/buckets/nyc-tlc?region=us-east-1&tab=objects).
+
+# Initial ETL
+
+Perform initial etl on the raw data. The etl process files one by one because the raw data has inconsistent schemas.
+
+Change this line of code to adapt to your machine.
+```python
+fs = file_system.get(sc_uri("172.29.89.207"), configuration())#need adaptation on different machines
 ```
 
-## Test Dataset
-
-The test data can be found under `test_data`. It contains the trip records of _**yellow cab and green cab of Sep 2019**_. The data has been processed with initial etl.
+The ETL program takes two arguments, a directory containing all raw data files, and an output directory.
+```sh
+spark-submit etl_collection/etl_general.py raw_data data
+```
 
 
 # Transportations
+
+> Please run all the commands of transportation analysis under the directory containing the corresponding program file.
+
+0. Please find all programs below under `$project_root/transportation_aaa264`
 
 1. **etl_PU_DO/code/etl_parquet_all.py**
 
@@ -63,9 +74,7 @@ python parking_lot_etl.py
 Description:
 This program will yield the parking lot's geographic information after the ETL process.
 
-5. **analysis_PU_DO/code/**
-
-**up_and_down_by_color.py **
+5. **analysis_PU_DO/code/up_and_down_by_color.py **
 
 Usage:
 ```
@@ -181,28 +190,21 @@ Description:
 This program visualizes the data of the distribution of subway stations.
 
 # Time Analysis
+> Please run all the commands of time analysis under `$project_root/time_yga111`
 
-**1. ETL**
+**1. Specialized ETL for time**
 
-    Perform two ETL jobs to get the data needed for analysis. 
+Perform a ETL job to get the data needed for time analysis. 
 
-    Change this line of code to adapt to your machine.
+Change this line of code to adapt to your machine.
+```sh
+fs = file_system.get(sc_uri("172.29.89.207"), configuration())#need adaptation on different machines
+```
 
-    ```sh
-    fs = file_system.get(sc_uri("172.29.89.207"), configuration())#need adaptation on different machines
-    ```
-
-    Put the etl_parquet.py file under the raw data directory. The initial ETL program takes one argument, the output parquet file path.
-
-    ```sh
-    spark-submit time_yga111/etl_parquet.py your_output
-    ```
-
-    Put the etl_time.py file under the data directory. The second ETL program takes one argument, the output parquet file path. We can get a directory containing all the parquet files.
-
-    ```sh
-    spark-submit time_yga111/etl_time.py your_output
-    ```
+The time ETL program takes two arguments, the input directory containing the raw data, and the output directory for ETL results.
+```sh
+spark-submit etl_time.py ../raw_data your_input
+```
 
 **2. Query**
 
@@ -220,18 +222,18 @@ Make sure everytime just run one of these five functions.
     #hourly_trip_count(trip)
 ```
 
-This query_time.py program takes two arguments, the input data path and the output file path. The demo output csv file can be found under `time_yga111/data/month/month-2017.csv`. 
+This query_time.py program takes two arguments, the input data path and the output file path. The demo output csv file can be found under `$project_root/time_yga111/data/month/month-2017.csv`. 
 
 ```sh
-spark-submit time_yga111/query_time.py 2017_input 2017_output
+spark-submit query_time.py your_input your_output
 ```
 
 The query_passenger.py does the queries about passengers on these five years' data respectively, too.
 
-This query_passenger.py program takes two arguments, the input data path and the output file path. The demo output csv file can be found under `time_yga111/data/passenger/passenger-2017.csv`. 
+This query_passenger.py program takes two arguments, the input data path and the output file path. The demo output csv file can be found under `$project_root/time_yga111/data/passenger/passenger-2017.csv`. 
 
 ```sh
-spark-submit time_yga111/query_passenger.py 2017_input 2017_output
+spark-submit query_passenger.py your_input your_output
 ```
 
 **3. Visualization**
@@ -248,25 +250,23 @@ spark-submit time_yga111/query_passenger.py 2017_input 2017_output
         #plot_year(inputs)
     ```
 
-    This plot_time.py program takes one argument, the input data path. The demo output png file can be found under `time_yga111/figure/day/`.
+    This plot_time.py program takes one argument, the input data path. The demo output png file can be found under `$project_root/time_yga111/figure/day/`.
 
     ```sh
-    spark-submit time_yga111/plot_time.py time_yga111/data/day/
+    spark-submit plot_time.py data/day/
     ```
 
     The plot_passenger.py visualizes the relation between weekday and average passenger number per order on these five years' data altogether.
 
-    This plot_passenger.py program takes one argument, the input data path. The demo output png file can be found under `time_yga111/figure/passenger/`.
+    This plot_passenger.py program takes one argument, the input data path. The demo output png file can be found under `$project_root/time_yga111/figure/passenger/`.
 
     ```sh
-    spark-submit time_yga111/plot_passenger.py time_yga111/data/passenger/
+    spark-submit plot_passenger.py data/passenger/
     ```
 
 # Speed Analysis
 
-0. #### Home Directory
-
-   To run the python scripts mentioned below smoothly, all the `home_dir` needs to be altered accordingly.
+> Please run all the commands of speed analysis under `$project_root/speed_ywa422`
 
 1. #### ETL
 
@@ -385,26 +385,40 @@ spark-submit time_yga111/query_passenger.py 2017_input 2017_output
 
 # Tip Analysis
 
+> Please run all the commands of tips analysis under `$project_root/tips_ywa416`
+
+## bash script to test tip related programs
+```sh
+spark-submit general.py test_data your_output/etl_figures
+spark-submit overview.py test_data your_output
+spark-submit location.py test_data your_output
+python3 location_viz.py your_output your_output/location_result
+spark-submit model_regressor.py test_data your_output/model_regressor
+spark-submit model_classifier.py test_data your_output/model_classifier
+```
+All results will be written to `$project_root/tips_ywa416/your_output`.
+
+## detailed explanation
 1. general query a month's data
 This program will run some general queries about tips and fares on one month of data, looking at abnormal data and if some features are related to tipping, in order to determine the final ETL for tip analysis on 5 years of data. 
 
 The program takes two arguments, the input data path and the output graph path. 
 ```sh
-spark-submit tips_ywa416/general.py test_data your_output
+spark-submit general.py test_data your_output
 ```
-Detailed explanantion are written in the program comments. The demo output figures can be found under `tips_ywa416/figures/etl`.
+Detailed explanantion are written in the program comments. The demo output figures can be found under `figures/etl`.
 
 2. tipping overview
-This program will 1. get the distribution of tipping over the 5 years, 2. get daily mean, max, median, trip amount of the 5 year. The organized output files of yellow cab can be found under `tips_ywa416/data/overivew`.
+This program will 1. get the distribution of tipping over the 5 years, 2. get daily mean, max, median, trip amount of the 5 year. The organized output files of yellow cab can be found under `data/overivew`.
 
 > Please notice that this program does not include group by green/yellow cabs considering reducing shuffle. If you want to compare yellow cabs with green cabs, please run separately on the two dataset.
 
 The program takes two arguments, the input data path and the output data path.
 ```sh
-spark-submit tips_ywa416/overview.py test_data your_output
+spark-submit overview.py test_data your_output
 ```
 
-The visualization is done by Echarts, you may find the demo figures under `tips_ywa416/figures/overview`. 
+The visualization is done by Echarts, you may find the demo figures under `figures/overview`. 
 
 3. tipping by location
 
@@ -421,17 +435,17 @@ The python program takes three arguments, an input (the output data path by pysp
 1. A full table of the result joined with taxi zone.
 2. A top 20 table of the corresponding attribute by the spark result, for the first three is average tip ratio, and the last three is petty/generous trip count.
 3. A >count_threshold table. The record with small count are filtered because they might be seriously affected by outliers.
-The program will also visualize the 5 full results. The demo figures can be found under `tips_ywa416/figures/location`.
+The program will also visualize the 5 full results. The demo figures can be found under `figures/location`.
 ```sh
-spark-submit tips_ywa416/location.py test_data your_output
-python3 tips_ywa416/location_viz.py your_output result
+spark-submit location.py test_data your_output
+python3 location_viz.py your_output result
 ```
 > The python program is designed for reading spark output structure directly. Please provide the exactly same spark output directory for the first argument
 4. tipping models
 
 The program takes two arguments, the input data path and the output model path. The program will print out the evaluation score of test and validation, also the feature importances of tree-based methods. The default model is GBT for regressor, and RandomForest for classifier.
 ```sh
-spark-submit tips_ywa416/model_regressor.py test_data your_model_output
-spark-submit tips_ywa416/model_classifier.py test_data your_model_output
+spark-submit model_regressor.py test_data your_model_output
+spark-submit model_classifier.py test_data your_model_output
 ```
 > Please notice that these programs have bad performance on the dataset. They are mainly used give inspiration of important features.
